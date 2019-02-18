@@ -29,7 +29,7 @@ class NVCCPluginV2(Magics):
 
     @staticmethod
     def compile(output_dir, file_paths, out):
-        command_list = [compiler, '-I' + repr(output_dir)] + [repr(ipath) for ipath in file_paths.split('%')] + [ "-o", repr(os.path.join(out, "result.out"))]
+        command_list = [compiler, '-I' + r"{}".format(output_dir.replace(' ','\ '))] + [r"{}".format(ipath.replace(' ','\ ')) for ipath in file_paths.split('%')] + [ "-o", r"{}".format(os.path.join(out, "result.out").replace(' ','\ '))]
         print(command_list)
         res = subprocess.check_output(command_list, stderr=subprocess.STDOUT).decode("utf-8")
         print(res)
