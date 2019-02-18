@@ -71,8 +71,9 @@ class NVCCPluginV2(Magics):
         #        output = None
         #else:
         #    output = f'File written in {file_path}'
-
-        return output
+        #
+        #return output
+        return "Debug message..."
 
     @cell_magic
     def cuda_run(self, line='', cell=None):
