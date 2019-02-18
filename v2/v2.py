@@ -29,13 +29,13 @@ class NVCCPluginV2(Magics):
         res = subprocess.check_output([compiler, '-I' + output_dir, file_paths, "-o", out], stderr=subprocess.STDOUT)
         print(res)
 
-    def run(self, timeit=False):
-        if timeit:
-            stmt = f"subprocess.check_output(['{self.out}'], stderr=subprocess.STDOUT)"
-            output = self.shell.run_cell_magic(magic_name="timeit", line="-q -o import subprocess", cell=stmt)
-        else:
-            output = subprocess.check_output([self.out], stderr=subprocess.STDOUT)
-            output = output.decode('utf8')
+    def run(self):#, timeit=False):
+        #if timeit:
+        #    stmt = f"subprocess.check_output(['{self.out}'], stderr=subprocess.STDOUT)"
+        #    output = self.shell.run_cell_magic(magic_name="timeit", line="-q -o import subprocess", cell=stmt)
+        #else:
+        output = subprocess.check_output([self.out], stderr=subprocess.STDOUT)
+        output = output.decode('utf8')
 
         return output
 
@@ -77,7 +77,7 @@ class NVCCPluginV2(Magics):
 
     @cell_magic
     def cuda_run(self, line='', cell=None):
-        print('Test custom variang...')
+        print('Test custom variant...')
         try:
             args = self.argparser.parse_args(line.split())
         except SystemExit:
@@ -89,7 +89,7 @@ class NVCCPluginV2(Magics):
             cuda_src = [os.path.join(self.output_dir, x) for x in cuda_src if x[-3:] == '.cu']
             print(f'found sources: {cuda_src}')
             self.compile(self.output_dir, ' '.join(cuda_src), self.out)
-            output = self.run(timeit=args.timeit)
+            output = self.run()#timeit=args.timeit)
         except subprocess.CalledProcessError as e:
             print(e.output.decode("utf8"))
             output = None
