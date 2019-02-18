@@ -34,11 +34,9 @@ class NVCCPluginV2(Magics):
     def run(self, timeit=False):
         if timeit:
             stmt = f"subprocess.check_output(['{self.out}'], stderr=subprocess.STDOUT)"
-            output = self.shell.run_cell_magic(magic_name="timeit", line="-q -o import subprocess", cell=stmt)
+            return self.shell.run_cell_magic(magic_name="timeit", line="-q -o import subprocess", cell=stmt)
         else:
-            output = subprocess.check_output([self.out], stderr=subprocess.STDOUT).decode("utf-8")
-
-        return output
+            return subprocess.check_output([self.out], stderr=subprocess.STDOUT).decode("utf-8")
 
     @magic_arguments()
     @argument('-n', '--name', type=str, help='file name that will be produced by the cell. must end with .cu extension')
@@ -66,15 +64,13 @@ class NVCCPluginV2(Magics):
         if args.compile:
             try:
                 self.compile(self.output_dir, file_path, self.out)
-                output = self.run(False)#timeit=args.timeit)
+                return self.run(False)#timeit=args.timeit)
             except subprocess.CalledProcessError as e:
                 print(e.output.decode("utf8"))
-                output = None
+                return None
         else:
-            output = f'File written in {file_path}'
-        
-        return output
-
+            return f'File written in {file_path}'
+  
     @cell_magic
     def cuda_run(self, line='', cell=None):
         try:
@@ -93,4 +89,4 @@ class NVCCPluginV2(Magics):
             print(e.output.decode("utf-8"))
             output = None
 
-        return output.decode("utf-8")
+        return output
