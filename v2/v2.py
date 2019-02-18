@@ -17,7 +17,7 @@ class NVCCPluginV2(Magics):
         self.argparser = helper.get_argparser()
         current_dir = os.getcwd()
         self.output_dir = os.path.join(current_dir, 'gdrive/My\ Drive/cuda_tests/')
-        if not os.path.exists(self.output_dir.decode("utf-8"):
+        if not os.path.exists(self.output_dir.decode("utf-8")):
             os.mkdir(self.output_dir.decode("utf-8"))
             print(f'created output directory at {self.output_dir}')
         else:
