@@ -26,7 +26,7 @@ class NVCCPluginV2(Magics):
 
     @staticmethod
     def compile(output_dir, file_paths, out):
-        command_list = [compiler, '-I' + output_dir, file_paths.split(" "), "-o", out]
+        command_list = [compiler, '-I' + output_dir, file_paths, "-o", out]
         print(command_list)
         res = subprocess.check_output(command_list, stderr=subprocess.STDOUT)
         print(res)
