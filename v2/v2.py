@@ -90,7 +90,7 @@ class NVCCPluginV2(Magics):
             self.compile(self.output_dir, ' '.join(cuda_src), self.out)
             output = self.run(timeit=args.timeit)
         except subprocess.CalledProcessError as e:
-            print(e.output.decode("utf8"))
+            print(e.output.decode("utf-8"))
             output = None
 
-        return output
+        return output.decode("utf-8")
