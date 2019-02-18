@@ -23,7 +23,10 @@ class NVCCPluginV2(Magics):
         else:
             print(f'directory {self.output_dir} already exists')
 
-        self.out = os.path.join(current_dir, 'my_drive/cuda_tests/')
+        if not os.path.exists(os.path.join(current_dir, 'tmp'):
+            os.mkdir(os.path.join(current_dir, 'tmp'))
+        #self.out = os.path.join(current_dir, 'my_drive/cuda_tests/')
+        self.out = os.path.join(current_dir, 'tmp')
         print(f'Out bin {self.out}result.out')
 
     @staticmethod
