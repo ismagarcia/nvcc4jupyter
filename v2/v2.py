@@ -62,24 +62,20 @@ class NVCCPluginV2(Magics):
         with open(file_path, "w") as f:
             f.write(cell)
 
-        print(args)
-
-        if args.compile:
-            try:
-                # Issue?
-                self.compile(self.output_dir, file_path, self.out)
-                output = self.run(timeit=args.timeit)
-            except subprocess.CalledProcessError as e:
-                print(e.output.decode("utf8"))
-                output = None
-        else:
-            output = f'File written in {file_path}'
+        #if args.compile:
+        #    try:
+        #        self.compile(self.output_dir, file_path, self.out)
+        #        output = self.run(timeit=args.timeit)
+        #    except subprocess.CalledProcessError as e:
+        #        print(e.output.decode("utf8"))
+        #        output = None
+        #else:
+        #    output = f'File written in {file_path}'
 
         return output
 
     @cell_magic
     def cuda_run(self, line='', cell=None):
-        print('Test custom variant...')
         try:
             args = self.argparser.parse_args(line.split())
         except SystemExit:
