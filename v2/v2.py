@@ -16,20 +16,19 @@ class NVCCPluginV2(Magics):
         super(NVCCPluginV2, self).__init__(shell)
         self.argparser = helper.get_argparser()
         current_dir = os.getcwd()
-        self.output_dir = os.path.join(current_dir, 'gdrive/My Drive/cuda_tests/')
+        self.output_dir = os.path.join(current_dir, 'gdrive/my_drive/cuda_tests/')
         if not os.path.exists(self.output_dir):
             os.mkdir(self.output_dir)
             print(f'created output directory at {self.output_dir}')
         else:
             print(f'directory {self.output_dir} already exists')
 
-        self.out = os.path.join(current_dir, 'gdrive/My Drive/cuda_tests/')
-        #iself.out = current_dir
+        self.out = os.path.join(current_dir, 'gdrive/my_drive/cuda_tests/')
         print(f'Out bin {self.out}result.out')
 
     @staticmethod
     def compile(output_dir, file_paths, out):
-        command_list = [compiler, '-I' + r"{}".format(output_dir.replace(' ','\\ '))] + [r"{}".format(ipath.replace(' ','\\ ')) for ipath in file_paths.split('%')] + [ "-o", r"{}".format(os.path.join(out, "result.out").replace(' ','\\ '))]
+        command_list = [compiler, '-I' + os.path.normpath(output_dir)] + [os.path.normpath(ipath) for ipath in file_paths.split('%')] + [ "-o", os.path.join(out, "result.out")]
         print(command_list)
         res = subprocess.check_output(command_list, stderr=subprocess.STDOUT).decode("utf-8")
         print(res)
