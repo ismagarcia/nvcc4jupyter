@@ -84,7 +84,8 @@ class NVCCPluginV2(Magics):
             cuda_src = [os.path.join(self.output_dir, x) for x in cuda_src if x[-3:] == '.cu']
             print(f'found sources: {cuda_src}')
             self.compile(self.output_dir, ' '.join(cuda_src), self.out)
-            return self.run(timeit=args.timeit)
+            print(self.run(timeit=args.timeit))
+            return None
         except subprocess.CalledProcessError as e:
             print(e.output.decode("utf-8"))
             return None
