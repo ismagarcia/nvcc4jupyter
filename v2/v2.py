@@ -42,7 +42,6 @@ class NVCCPluginV2(Magics):
     @magic_arguments()
     @argument('-n', '--name', type=str, help='file name that will be produced by the cell. must end with .cu extension')
     @argument('-c', '--compile', type=bool, help='Should be compiled?')
-    @argument('-t', '--timeit', type=bool, help='Time it')
     @cell_magic
     def cuda(self, line='', cell=None):
         args = parse_argstring(self.cuda, line)
@@ -63,11 +62,13 @@ class NVCCPluginV2(Magics):
         with open(file_path, "w") as f:
             f.write(cell)
 
+        print(args)
+
         if args.compile:
             try:
                 # Issue?
                 self.compile(self.output_dir, file_path, self.out)
-                output = self.run(args.timeit)
+                output = self.run(timeit=args.timeit)
             except subprocess.CalledProcessError as e:
                 print(e.output.decode("utf8"))
                 output = None
