@@ -34,7 +34,7 @@ class NVCCPluginV2(Magics):
     def run(self, timeit=False):
         if timeit:
             stmt = f"subprocess.check_output(['{self.out}'], stderr=subprocess.STDOUT)"
-            return self.shell.run_cell_magic(magic_name="timeit", line="-q -o import subprocess", cell=stmt)
+            return self.shell.run_cell_magic(magic_name="timeit", line="-q -o import subprocess", cell=stmt).decode("utf-8")
         else:
             return subprocess.check_output([self.out], stderr=subprocess.STDOUT).decode("utf-8")
 
@@ -84,9 +84,8 @@ class NVCCPluginV2(Magics):
             cuda_src = [os.path.join(self.output_dir, x) for x in cuda_src if x[-3:] == '.cu']
             print(f'found sources: {cuda_src}')
             self.compile(self.output_dir, ' '.join(cuda_src), self.out)
-            output = self.run(timeit=args.timeit)
+            return self.run(timeit=args.timeit)
         except subprocess.CalledProcessError as e:
             print(e.output.decode("utf-8"))
-            output = None
+            return None
 
-        return output
