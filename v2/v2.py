@@ -68,12 +68,11 @@ class NVCCPluginV2(Magics):
         #        output = self.run(timeit=args.timeit)
             except subprocess.CalledProcessError as e:
                 print(e.output.decode("utf8"))
-        #        output = None
+                output = None
         else:
             output = f'File written in {file_path}'
         
-        #return output
-        return "Debug message...9"
+        return output
 
     @cell_magic
     def cuda_run(self, line='', cell=None):
