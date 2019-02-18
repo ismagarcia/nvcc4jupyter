@@ -24,12 +24,12 @@ class NVCCPluginV2(Magics):
         else:
             print(f'directory {self.output_dir} already exists')
 
-        self.out = current_dir
+        self.out = os.path.join(current_dir, "result.out")
         print(f'Out bin {self.out}/result.out')
 
     @staticmethod
     def compile(output_dir, file_paths, out):
-        command_list = [compiler, '-I' + os.path.normpath(output_dir)] + [os.path.normpath(ipath) for ipath in file_paths.split('%')] + [ "-o", os.path.join(out, "result.out")]
+        command_list = [compiler, '-I' + output_dir] + [ipath for ipath in file_paths.split('%')] + [ "-o", out)]
         print(command_list)
         res = subprocess.check_output(command_list, stderr=subprocess.STDOUT).decode("utf-8")
         print(res)
