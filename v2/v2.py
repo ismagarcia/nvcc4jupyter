@@ -36,8 +36,7 @@ class NVCCPluginV2(Magics):
             stmt = f"subprocess.check_output(['{self.out}'], stderr=subprocess.STDOUT)"
             output = self.shell.run_cell_magic(magic_name="timeit", line="-q -o import subprocess", cell=stmt)
         else:
-            output = subprocess.check_output([self.out], stderr=subprocess.STDOUT)
-            output = output.decode('utf8')
+            output = subprocess.check_output([self.out], stderr=subprocess.STDOUT).decode("utf-8")
 
         return output
 
