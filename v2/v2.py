@@ -65,7 +65,7 @@ class NVCCPluginV2(Magics):
         if args.compile:
             try:
                 self.compile(self.output_dir, file_path, self.out)
-        #        output = self.run(timeit=args.timeit)
+                output = self.run(False)#timeit=args.timeit)
             except subprocess.CalledProcessError as e:
                 print(e.output.decode("utf8"))
                 output = None
