@@ -44,23 +44,23 @@ class NVCCPluginV2(Magics):
     @argument('-c', '--compile', type=bool, help='Should be compiled?')
     @cell_magic
     def cuda(self, line='', cell=None):
-        args = parse_argstring(self.cuda, line)
-        ex = args.name.split('.')[-1]
-        if ex not in ['cu', 'h']:
-            raise Exception('name must end with .cu or .h')
+        #args = parse_argstring(self.cuda, line)
+        #ex = args.name.split('.')[-1]
+        #if ex not in ['cu', 'h']:
+        #    raise Exception('name must end with .cu or .h')
 
-        if not os.path.exists(self.output_dir):
-            print(f'Output directory does not exist, creating')
-            try:
-                os.mkdir(self.output_dir)
-            except OSError:
-                print(f"Creation of the directory {self.output_dir} failed")
-            else:
-                print(f"Successfully created the directory {self.output_dir}")
+        #if not os.path.exists(self.output_dir):
+        #    print(f'Output directory does not exist, creating')
+        #    try:
+        #        os.mkdir(self.output_dir)
+        #    except OSError:
+        #        print(f"Creation of the directory {self.output_dir} failed")
+        #    else:
+        #        print(f"Successfully created the directory {self.output_dir}")
 
-        file_path = os.path.join(self.output_dir, args.name)
-        with open(file_path, "w") as f:
-            f.write(cell)
+        #file_path = os.path.join(self.output_dir, args.name)
+        #with open(file_path, "w") as f:
+        #    f.write(cell)
 
         #if args.compile:
         #    try:
@@ -72,7 +72,8 @@ class NVCCPluginV2(Magics):
         #else:
         #    output = f'File written in {file_path}'
 
-        return output
+        #return output
+        return True
 
     @cell_magic
     def cuda_run(self, line='', cell=None):
