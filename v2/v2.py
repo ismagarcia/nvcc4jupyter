@@ -29,19 +29,20 @@ class NVCCPluginV2(Magics):
         res = subprocess.check_output([compiler, '-I' + output_dir, file_paths, "-o", out], stderr=subprocess.STDOUT)
         print(res)
 
-    def run(self):#, timeit=False):
-        #if timeit:
-        #    stmt = f"subprocess.check_output(['{self.out}'], stderr=subprocess.STDOUT)"
-        #    output = self.shell.run_cell_magic(magic_name="timeit", line="-q -o import subprocess", cell=stmt)
-        #else:
-        output = subprocess.check_output([self.out], stderr=subprocess.STDOUT)
-        output = output.decode('utf8')
+    def run(self, timeit=False):
+        if timeit:
+            stmt = f"subprocess.check_output(['{self.out}'], stderr=subprocess.STDOUT)"
+            output = self.shell.run_cell_magic(magic_name="timeit", line="-q -o import subprocess", cell=stmt)
+        else:
+            output = subprocess.check_output([self.out], stderr=subprocess.STDOUT)
+            output = output.decode('utf8')
 
         return output
 
     @magic_arguments()
     @argument('-n', '--name', type=str, help='file name that will be produced by the cell. must end with .cu extension')
     @argument('-c', '--compile', type=bool, help='Should be compiled?')
+    @argument('-t', '--timeit', type=bool, help='Time it')
     @cell_magic
     def cuda(self, line='', cell=None):
         args = parse_argstring(self.cuda, line)
@@ -66,7 +67,7 @@ class NVCCPluginV2(Magics):
             try:
                 # Issue?
                 self.compile(self.output_dir, file_path, self.out)
-                output = self.run()#timeit=args.timeit)
+                output = self.run(timeit=args.timeit)
             except subprocess.CalledProcessError as e:
                 print(e.output.decode("utf8"))
                 output = None
@@ -89,7 +90,7 @@ class NVCCPluginV2(Magics):
             cuda_src = [os.path.join(self.output_dir, x) for x in cuda_src if x[-3:] == '.cu']
             print(f'found sources: {cuda_src}')
             self.compile(self.output_dir, ' '.join(cuda_src), self.out)
-            output = self.run()#timeit=args.timeit)
+            output = self.run(timeit=args.timeit)
         except subprocess.CalledProcessError as e:
             print(e.output.decode("utf8"))
             output = None
