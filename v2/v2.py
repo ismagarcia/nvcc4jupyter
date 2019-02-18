@@ -4,6 +4,7 @@ import subprocess
 from IPython.core.magic import Magics, cell_magic, magics_class
 from IPython.core.magic_arguments import argument, magic_arguments, parse_argstring
 from common import helper
+from google.colab import drive
 
 compiler = '/usr/local/cuda/bin/nvcc'
 
@@ -14,7 +15,7 @@ class NVCCPluginV2(Magics):
         super(NVCCPluginV2, self).__init__(shell)
         self.argparser = helper.get_argparser()
         current_dir = os.getcwd()
-        self.output_dir = os.path.join(current_dir, 'drive')
+        self.output_dir = os.path.join(current_dir, 'gdrive/My\ Drive')
         if not os.path.exists(self.output_dir):
             os.mkdir(self.output_dir)
             print(f'created output directory at {self.output_dir}')
