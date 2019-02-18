@@ -28,7 +28,7 @@ class NVCCPluginV2(Magics):
 
     @staticmethod
     def compile(output_dir, file_paths, out):
-        command_list = [compiler, '-I' + os.path.normpath(output_dir)] + [os.path.normpath(ipath) for ipath in file_paths.split(' ')] + [ "-o", os.path.join(out, "result.out")]
+        command_list = [compiler, '-I' + os.path.normpath(output_dir)] + [os.path.normpath(ipath) for ipath in file_paths.split('%')] + [ "-o", os.path.join(out, "result.out")]
         print(command_list)
         res = subprocess.check_output(command_list, stderr=subprocess.STDOUT).decode("utf-8")
         print(res)
@@ -85,7 +85,7 @@ class NVCCPluginV2(Magics):
             cuda_src = os.listdir(self.output_dir)
             cuda_src = [os.path.join(self.output_dir, x) for x in cuda_src if x[-3:] == '.cu']
             print(f'found sources: {cuda_src}')
-            self.compile(self.output_dir, ' '.join(cuda_src), self.out)
+            self.compile(self.output_dir, '%'.join(cuda_src), self.out)
             print(self.run(timeit=args.timeit))
             return None
         except subprocess.CalledProcessError as e:
