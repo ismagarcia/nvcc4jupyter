@@ -12,22 +12,23 @@ compiler = '/usr/local/cuda/bin/nvcc'
 class NVCCPluginV2(Magics):
 
     def __init__(self, shell):
+
         super(NVCCPluginV2, self).__init__(shell)
         self.argparser = helper.get_argparser()
         current_dir = os.getcwd()
-        self.output_dir = os.path.join(current_dir, 'gdrive/My Drive/cuda_test_01')
+        self.output_dir = os.path.join(current_dir, 'gdrive/My Drive/cuda_tests/')
         if not os.path.exists(self.output_dir):
             os.mkdir(self.output_dir)
             print(f'created output directory at {self.output_dir}')
         else:
             print(f'directory {self.output_dir} already exists')
 
-        self.out = os.path.join(current_dir, "result.out")
-        print(f'Out bin {self.out}')
+        self.out = os.path.join(current_dir, 'gdrive/My Drive/cuda_tests/')
+        print(f'Out bin {self.out}result.out')
 
     @staticmethod
     def compile(output_dir, file_paths, out):
-        command_list = [compiler, '-I' + output_dir] + file_paths.split(' ') + [ "-o", out]
+        command_list = [compiler, '-I' + output_dir] + file_paths.split(' ') + [ "-o", os.path.join(out, "result.out"]
         print(command_list)
         res = subprocess.check_output(command_list, stderr=subprocess.STDOUT).decode("utf-8")
         print(res)
