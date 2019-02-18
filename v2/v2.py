@@ -28,7 +28,7 @@ class NVCCPluginV2(Magics):
     def compile(output_dir, file_paths, out):
         command_list = [compiler, '-I' + output_dir] + file_paths.split(' ') + [ "-o", out]
         print(command_list)
-        res = subprocess.check_output(command_list, stderr=subprocess.STDOUT)
+        res = subprocess.check_output(command_list, stderr=subprocess.STDOUT).decode("utf-8")
         print(res)
 
     def run(self, timeit=False):
