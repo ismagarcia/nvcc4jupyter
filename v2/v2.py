@@ -76,6 +76,7 @@ class NVCCPluginV2(Magics):
 
     @cell_magic
     def cuda_run(self, line='', cell=None):
+        print('Test custom variang...')
         try:
             args = self.argparser.parse_args(line.split())
         except SystemExit:
