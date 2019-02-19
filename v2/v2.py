@@ -29,7 +29,7 @@ class NVCCPluginV2(Magics):
 
     @staticmethod
     def compile(output_dir, file_paths, out):
-        command_list = [compiler, '-I' + output_dir] + [ipath for ipath in file_paths.split('%')] + [ "-o", out]
+        command_list = [compiler, '-I' + output_dir] + [ipath for ipath in file_paths.split('%')] + [ "-o", out] + ["-Xcompiler -fopenmp -DTHRUST_DEVICE_SYSTEM=THRUST_DEVICE_SYSTEM_OMP -lgomp"]
         print(command_list)
         res = subprocess.check_output(command_list, stderr=subprocess.STDOUT).decode("utf-8")
         print(res)
